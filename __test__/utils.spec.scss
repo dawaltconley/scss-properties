@@ -4,37 +4,37 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'var';
-@use 'utils';
-@use '../sass/utils' as u;
+@use 'utils' as test-utils;
+@use '../sass/utils';
 
 @include describe('utils') {
   @include it('Correct create var()') {
     $r: string.unique-id();
     $name: --#{$r};
 
-    @include assert-equal(u.Var($name), 'var(--#{$r})');
+    @include assert-equal(utils.Var($name), 'var(--#{$r})');
   };
 
   @include it('Correct create calc()') {
     $r: string.unique-id();
 
-    @include assert-equal(u.Calc($r), 'calc(#{$r})');
+    @include assert-equal(utils.Calc($r), 'calc(#{$r})');
   };
 
   @include it('Correct create calc() with var()') {
     $r: string.unique-id();
     $name: --#{$r};
-    $var: u.Var($name);
+    $var: utils.Var($name);
 
-    @include assert-equal(u.Calc(u.Var($name)), 'calc(var(--#{$r}))');
+    @include assert-equal(utils.Calc(utils.Var($name)), 'calc(var(--#{$r}))');
   };
   
   @include it('Correct create calc() with var()') {
     $r: string.unique-id();
     $name: --#{$r};
-    $var: u.Var($name);
+    $var: utils.Var($name);
 
-    @include assert-equal(u.Calc(u.Var($name)), 'calc(var(--#{$r}))');
+    @include assert-equal(utils.Calc(utils.Var($name)), 'calc(var(--#{$r}))');
   };
 
   @include it('Correct convert to value to unit') {
@@ -67,22 +67,22 @@
     
     @each $key, $zero-unit in $units {
       $r: math.random($limit: var.$MAX-INTEGER);
-      $value: utils.flip($r, -$r);
+      $value: test-utils.flip($r, -$r);
 
-      @include assert-equal(u.to-unit($value, $key), $value + $zero-unit);
+      @include assert-equal(utils.to-unit($value, $key), $value + $zero-unit);
     }
   };
 
   @include it('Correct convert to number') {
     @for $var from 1 to 10 {
       $r: math.random($limit: var.$MAX-INTEGER);
-      $float: utils.flip($r + random(), $r);
-      $value: utils.flip($float, -$float);
+      $float: test-utils.flip($r + random(), $r);
+      $value: test-utils.flip($float, -$float);
   
       // $string: meta.inspect($value);
       $string: '#{$value}';
 
-      @include assert-equal(u.to-number($string), $value, $inspect: true);
+      @include assert-equal(utils.to-number($string), $value, $inspect: true);
     }
   };
 
@@ -91,7 +91,7 @@
     $s-exp: '--brand-color)';
     $s-exp-exp: '--brand-color';
 
-    @include assert-equal(u.str-replace($s, 'var('), $s-exp);
-    @include assert-equal(u.str-replace($s-exp, ')'), $s-exp-exp);
+    @include assert-equal(utils.str-replace($s, 'var('), $s-exp);
+    @include assert-equal(utils.str-replace($s-exp, ')'), $s-exp-exp);
   }
 }
