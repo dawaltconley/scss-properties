@@ -26,7 +26,7 @@
 ///
 /// @example
 /// // returns calc(var(--brand-color) + 20)
-/// mkcalc(var(--brand-color) + 20);
+/// mkcalc('var(--brand-color) + 20');
 ///
 /// @param {Any} $property - Initial value
 /// @return {String} - wrapper value with 'calc'
