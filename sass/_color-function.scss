@@ -13,6 +13,18 @@ $_alpha: ();
   @return map.get($_alpha, $colorName);
 }
 
+// needs work to use alpha
+// needs work to use hue in this way; averaging hue doesn't always produce desired results
+// also allow mixing different values by different weights?
+
+@function mix($colorName1, $colorName2, $weight: 50%) {
+  $hue-color:        utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-HUE);
+  $saturation-color: utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-SATURATION);
+  $lightness-color:  utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-LIGHTNESS);
+
+  @return sass-color.makeHSL($hue: $hue-color, $saturation: $saturation-color, $lightness: $lightness-color);
+}
+
 @function adjust($colorName, $hue: null, $saturation: null, $lightness: null, $alpha: null) {
   $hue-color:        utils.calcProperty($hue, $colorName, var.$POSTFIX-HUE, var.$UNIT-DEG, var.$ADJUST);
   $saturation-color: utils.calcProperty($saturation, $colorName, var.$POSTFIX-SATURATION, var.$UNIT-PERCENT, var.$ADJUST);
