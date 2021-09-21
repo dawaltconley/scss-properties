@@ -12,29 +12,29 @@
     $r: string.unique-id();
     $name: --#{$r};
 
-    @include assert-equal(utils.Var($name), 'var(--#{$r})');
+    @include assert-equal(utils.mkvar($name), 'var(--#{$r})');
   };
 
   @include it('Correct create calc()') {
     $r: string.unique-id();
 
-    @include assert-equal(utils.Calc($r), 'calc(#{$r})');
+    @include assert-equal(utils.mkcalc($r), 'calc(#{$r})');
   };
 
   @include it('Correct create calc() with var()') {
     $r: string.unique-id();
     $name: --#{$r};
-    $var: utils.Var($name);
+    $var: utils.mkvar($name);
 
-    @include assert-equal(utils.Calc(utils.Var($name)), 'calc(var(--#{$r}))');
+    @include assert-equal(utils.mkcalc(utils.mkvar($name)), 'calc(var(--#{$r}))');
   };
   
   @include it('Correct create calc() with var()') {
     $r: string.unique-id();
     $name: --#{$r};
-    $var: utils.Var($name);
+    $var: utils.mkvar($name);
 
-    @include assert-equal(utils.Calc(utils.Var($name)), 'calc(var(--#{$r}))');
+    @include assert-equal(utils.mkcalc(utils.mkvar($name)), 'calc(var(--#{$r}))');
   };
 
   @include it('Correct convert to value to unit') {

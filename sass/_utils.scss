@@ -11,13 +11,13 @@
 ///
 /// @example
 /// // returns var(--brand-color)
-/// Var(--brand-color);
+/// mkvar(--brand-color);
 ///
 /// @param {Any} $property - Initial value
 /// @return {String} - wrapper value with 'var'
 ///
 
-@function Var($property) {
+@function mkvar($property) {
   @return #{string.unquote('var(#{$property})')};
 };
 
@@ -26,12 +26,12 @@
 ///
 /// @example
 /// // returns calc(var(--brand-color) + 20)
-/// Calc(var(--brand-color) + 20);
+/// mkcalc(var(--brand-color) + 20);
 ///
 /// @param {Any} $property - Initial value
 /// @return {String} - wrapper value with 'calc'
 ///
-@function Calc($property) {
+@function mkcalc($property) {
   @return #{string.unquote('calc(#{$property})')};
 };
 
@@ -41,17 +41,17 @@
 
   @if ($type == var.$ADJUST) {
     @if ($parameter and math.is-unitless($parameter)) {
-      @return Calc(#{Var($name) + #{$param}});
+      @return mkcalc(#{mkvar($name) + #{$param}});
     }
 
     @if ($parameter) {
       $percentile: #{1 + $parameter * 0.01};
       $percentile: str-replace($percentile, math.unit(to-number($percentile)));
 
-      @return Calc(#{Var($name) * #{$percentile}});
+      @return mkcalc('#{mkvar($name)} * #{$percentile}');
     }
 
-    @return Var($name);
+    @return mkvar($name);
   }
 
   @if ($type == var.$CHANGE) {
@@ -63,7 +63,7 @@
       @return #{$parameter};
     }
 
-    @return Var($name);
+    @return mkvar($name);
   }
 
   @return null;
@@ -72,18 +72,18 @@
 @function calcPropertyAlpha($alpha, $colorName, $type: null, $hasAlpha: null) {
   $alphaIsNumber: ($alpha or $hasAlpha) and (meta.type-of($alpha) == 'number');
 
-  $property: Var(#{$colorName}#{var.$POSTFIX-ALPHA});
+  $property: mkvar(#{$colorName}#{var.$POSTFIX-ALPHA});
 
   @if ($type == var.$ADJUST) {
     @if ($alphaIsNumber and math.is-unitless($alpha)) {
-      @return Calc(#{$property} + #{$alpha});
+      @return mkcalc(#{$property} + #{$alpha});
     }
 
     @if ($alphaIsNumber) {
       $percentile: #{1 + $alpha * 0.01};
       $percentile: str-replace($percentile, math.unit(to-number($percentile)));
 
-      @return Calc(#{$property} * #{$percentile});
+      @return mkcalc(#{$property} * #{$percentile});
     }
 
     @if ($hasAlpha) {
