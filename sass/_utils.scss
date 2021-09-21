@@ -45,9 +45,7 @@
     }
 
     @if ($parameter) {
-      $percentile: #{1 + $parameter * 0.01};
-      $percentile: str-replace($percentile, math.unit(to-number($percentile)));
-
+      $percentile: math.div($parameter, 100%);
       @return mkcalc('#{mkvar($name)} * #{$percentile}');
     }
 
@@ -80,7 +78,7 @@
     }
 
     @if ($alphaIsNumber) {
-      $percentile: 1 + math.div($alpha, 100%);
+      $percentile: math.div($alpha, 100%);
       @return mkcalc('#{$property} * #{$percentile}');
     }
 
