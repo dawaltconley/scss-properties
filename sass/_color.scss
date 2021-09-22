@@ -7,3 +7,11 @@
 
   @return #{string.unquote('hsl(#{$hue}, #{$saturation}, #{$lightness})')};
 }
+
+@function makeRGB($red: null, $green: null, $blue: null, $alpha: null) {
+  @if ($alpha) {
+    @return #{string.unquote('rgba(#{$red}, #{$green}, #{$blue}, #{$alpha})')}
+  }
+
+  @return #{string.unquote('rgb(#{$red}, #{$green}, #{$blue})')};
+}

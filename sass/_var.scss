@@ -4,6 +4,9 @@ $CHANGE: 'change';
 $UNIT-DEG: 'deg';
 $UNIT-PERCENT: '%';
 
+$POSTFIX-RED: '-r' !default;
+$POSTFIX-GREEN: '-g' !default;
+$POSTFIX-BLUE: '-b' !default;
 $POSTFIX-HUE: '-h' !default;
 $POSTFIX-SATURATION: '-s' !default;
 $POSTFIX-LIGHTNESS: '-l' !default;
