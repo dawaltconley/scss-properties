@@ -15,12 +15,12 @@ $_alpha: ();
 
 // also allow mixing different values by different weights?
 @function mix($colorName1, $colorName2, $weight: 50%) {
-  $red-color:        utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-RED);
-  $green-color:      utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-GREEN);
-  $blue-color:       utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-BLUE);
+  $hue-color:        utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-HUE);
+  $saturation-color: utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-SATURATION);
+  $lightness-color:  utils.calcMix($colorName1, $colorName2, $weight, var.$POSTFIX-LIGHTNESS);
   $alpha-color:      utils.calcMixAlpha($colorName1, $colorName2, $weight, _hasAlpha($colorName1), _hasAlpha($colorName2));
 
-  @return sass-color.makeRGB($red: $red-color, $green: $green-color, $blue: $blue-color, $alpha: $alpha-color);
+  @return sass-color.makeHSL($hue: $hue-color, $saturation: $saturation-color, $lightness: $lightness-color);
 }
 
 @function adjust($colorName, $hue: null, $saturation: null, $lightness: null, $alpha: null) {
@@ -59,9 +59,6 @@ $_alpha: ();
       @if ($isMap) {
         @include define($color, $parent: $name);
       } @else if ($isColor) {
-        $name-r: #{$name}#{var.$POSTFIX-RED};
-        $name-g: #{$name}#{var.$POSTFIX-GREEN};
-        $name-b: #{$name}#{var.$POSTFIX-BLUE};
         $name-h: #{$name}#{var.$POSTFIX-HUE};
         $name-s: #{$name}#{var.$POSTFIX-SATURATION};
         $name-l: #{$name}#{var.$POSTFIX-LIGHTNESS};
@@ -73,9 +70,6 @@ $_alpha: ();
           #{$name}: sass-color.makeHSL(var($name-h), var($name-s), var($name-l));
         }
   
-        #{$name-r}: color.red($color);
-        #{$name-g}: color.green($color);
-        #{$name-b}: color.blue($color);
         #{$name-h}: color.hue($color);
         #{$name-s}: color.saturation($color);
         #{$name-l}: color.lightness($color);
