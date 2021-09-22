@@ -101,7 +101,19 @@
   @return null;
 }
 
-@function calcMix($colorName1, $colorName2, $weight, $colorPart) {
+@function mkabs($property1, $property2) {
+  @return max(calc(#{$p1} - #{$p2}), calc(#{$p2} - #{$p1}));
+}
+
+// for hue: if hue1 - hue2 is > 180deg, then subtract 360deg from either to get the right value
+// possible
+// min(avg(#{$var1} - #{$var2}), avg(#{$var1 - 360deg} - ${var2}))
+// works 1: 300, 2: 30, a: 165deg, b: -15, min: -15 (alt 345)
+// wrong 1: 30, 2: 300, a: -165, b: -15, min: -165 (works with mkabs)
+//       1: 60, 2: 90, a: 75, b: -195
+//       1: 179, 2: 181, a: 180, b: 
+
+@function calcMix($colorName1, $colorName2, $weight, $colorParti, $unit: null) {
   $var1: mkvar(#{$colorName1}#{$colorPart});
   $var2: mkvar(#{$colorName2}#{$colorPart});
   $w1: math.div($weight, 100%);
