@@ -113,11 +113,15 @@
 //       1: 60, 2: 90, a: 75, b: -195
 //       1: 179, 2: 181, a: 180, b: 
 
-@function calcMix($colorName1, $colorName2, $weight, $colorParti, $unit: null) {
+@function calcMix($colorName1, $colorName2, $weight, $colorPart, $modify: null) {
   $var1: mkvar(#{$colorName1}#{$colorPart});
   $var2: mkvar(#{$colorName2}#{$colorPart});
   $w1: math.div($weight, 100%);
   $w2: 1 - $w1;
+
+  @if ($modify) {
+    $var1: '(#{$var1} + #{$modify})';
+  }
 
   @return mkcalc('(#{$var1} * #{$w1}) + (#{$var2} * #{$w2})');
 }
