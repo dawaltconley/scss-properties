@@ -46,7 +46,7 @@
     }
 
     @if ($parameter) {
-      $percentile: math.div($parameter, 100%);
+      $percentile: 1 + math.div($parameter, 100%);
       @return mkcalc('#{$var} * #{$percentile}');
     }
 
@@ -79,7 +79,7 @@
     }
 
     @if ($alphaIsNumber) {
-      $percentile: math.div($alpha, 100%);
+      $percentile: 1 + math.div($alpha, 100%);
       @return if($hasAlpha, mkcalc('#{$property} * #{$percentile}'), #{$percentile});
     }
   }
