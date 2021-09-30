@@ -66,7 +66,7 @@
       // ((100% or 0) - 50% + (25% or 0)) * -1
       // this don't work...bc max and min get multiplied by whatever param is.
       // could try subsequently dividing, but gets tricky with pos/negative...will always produce negative
-      $adjust: '((#{$max} * max(0, #{$param}) / #{$param}) - #{$property} + (#{$min} * min(0, #{$param}) / #{$param})) * -1';
+      $adjust: 'max(#{$max} * max(0, #{$param}) / #{$param}, #{$property}) - max(#{$property} * max(0, #{$param}) / #{$param}, #{$min})';
       $adjust: '(#{$adjust}) * #{$param}';
       @if ($isNumber) {
         // simplify css output if $param is a number
