@@ -63,7 +63,8 @@
     // scale existing value relative to its min or max
     @if ($param) {
       // if $param is greater than 0, use difference from max. if less than 0, use min
-      $adjust: '(#{$max} * max(0, #{$param})) - #{$property} - (#{$min} * min(0, #{$param}))';
+      // ((100% or 0) - 50% + (25% or 0)) * -1
+      $adjust: '((#{$max} * max(0, #{$param})) - #{$property} + (#{$min} * min(0, #{$param}))) * -1';
       $adjust: '(#{$adjust}) * #{$param}';
       @if ($isNumber) {
         // simplify css output if $param is a number
