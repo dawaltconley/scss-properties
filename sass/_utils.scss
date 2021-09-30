@@ -64,7 +64,9 @@
     @if ($param) {
       // if $param is greater than 0, use difference from max. if less than 0, use min
       // ((100% or 0) - 50% + (25% or 0)) * -1
-      $adjust: '((#{$max} * max(0, #{$param})) - #{$property} + (#{$min} * min(0, #{$param}))) * -1';
+      // this don't work...bc max and min get multiplied by whatever param is.
+      // could try subsequently dividing, but gets tricky with pos/negative...will always produce negative
+      $adjust: '((#{$max} * max(0, #{$param}) / #{$param}) - #{$property} + (#{$min} * min(0, #{$param}) / #{$param})) * -1';
       $adjust: '(#{$adjust}) * #{$param}';
       @if ($isNumber) {
         // simplify css output if $param is a number
