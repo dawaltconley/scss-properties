@@ -150,7 +150,7 @@
   @return sass-color.makeHSL($properties...);
 }
 
-@mixin define($colorMap, $parent: '', $forceAlpha: true) {
+@mixin define($colorMap, $parent: '', $forceAlpha: false) {
   @if (meta.type-of($colorMap) == 'map') {
     @each $colorName in map.keys($colorMap) {
       $name: #{$parent}#{$colorName};
