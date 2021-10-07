@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 @use 'var';
 
@@ -25,9 +26,10 @@
     $rgb: true; $i: 1;
     @while $rgb and $i <= list.length($args) {
       $a: list.nth($args, $i);
-      @if not (meta.type-of($a) == 'number' and umath.is-unitless($a)) {
+      @if meta.type-of($a) == 'number' and not math.is-unitless($a) {
         $rgb: false; $hsl: true;
       }
+      $i: $i + 1;
     }
   }
 
