@@ -7,11 +7,15 @@ $MIX: 'mix';
 
 $FUNCTIONS: $ADJUST, $CHANGE, $SCALE, $MIX;
 
+$RED: 'red';
+$GREEN: 'green';
+$BLUE: 'blue';
 $HUE: 'hue';
 $SATURATION: 'saturation';
 $LIGHTNESS: 'lightness';
 $ALPHA: 'alpha';
 
+$RGB: $RED, $GREEN, $BLUE;
 $HSL: $HUE, $SATURATION, $LIGHTNESS;
 $HSLA: list.append($HSL, $ALPHA);
 
@@ -33,6 +37,24 @@ $POSTFIX-LIGHTNESS: '-l' !default;
 $POSTFIX-ALPHA: '-a' !default;
 
 $PROPERTIES: (
+  #{$RED}: (
+    'unit': $UNIT-NONE,
+    'min': list.nth($RANGE-RGB, 1),
+    'max': list.nth($RANGE-RGB, 2),
+    'postfix': $POSTFIX-RED
+  ),
+  #{$GREEN}: (
+    'unit': $UNIT-NONE,
+    'min': list.nth($RANGE-RGB, 1),
+    'max': list.nth($RANGE-RGB, 2),
+    'postfix': $POSTFIX-GREEN
+  ),
+  #{$BLUE}: (
+    'unit': $UNIT-NONE,
+    'min': list.nth($RANGE-RGB, 1),
+    'max': list.nth($RANGE-RGB, 2),
+    'postfix': $POSTFIX-BLUE
+  ),
   #{$HUE}: (
     'unit': $UNIT-DEG,
     'min': list.nth($RANGE-DEG, 1),
