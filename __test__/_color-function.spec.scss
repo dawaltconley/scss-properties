@@ -15,6 +15,7 @@
 
 @include describe('User functions') {
   @include describe('define') {
+
     @include it('defines hsl properties using hsl values') {
       @include assert {
         @include output {
@@ -34,6 +35,7 @@
         }
       }
     }
+
     @include it('defines hsl properties using hex values') {
       @include assert {
         @include output {
@@ -53,6 +55,7 @@
         }
       }
     }
+
     @include it('defines hsla properties using hsla values') {
       @include assert {
         @include output {
@@ -73,6 +76,7 @@
         }
       }
     }
+
     @include it('defines hsla properties using hex values') {
       @include assert {
         @include output {
@@ -93,6 +97,7 @@
         }
       }
     }
+
     @include it('defines hsla properties using hsl with $forceAlpha') {
       @include assert {
         @include output {
@@ -113,6 +118,7 @@
         }
       }
     }
+
     @include it('defines hsla properties using hex with $forceAlpha') {
       @include assert {
         @include output {
@@ -133,6 +139,7 @@
         }
       }
     }
+
     @include it('defines multiple colors') {
       @include assert {
         @include output {
@@ -163,6 +170,7 @@
         }
       }
     }
+
     @include it('defines nested colors') {
       @include assert {
         @include output {
