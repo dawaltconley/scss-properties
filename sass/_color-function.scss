@@ -4,6 +4,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'var';
+@use 'args';
 @use 'utils';
 @use 'color' as sass-color;
 
@@ -46,8 +47,8 @@
 }
 
 @function mix($colorName1, $colorName2, $weight: 50%, $args...) {
-  $colorType: sass-color.parseKwargs($args...) or var.$RGBA;
-  $kwargs: utils.formatArgList($colorType, $args...);
+  $colorType: args.parseKwargs($args...) or var.$RGBA;
+  $kwargs: args.normalize($colorType, $args...);
   $valid: _validate(var.$MIX, ($colorName1, $colorName2), $weight: $weight, $kwargs...);
   $ops: ();
 
@@ -84,23 +85,23 @@
 }
 
 @function _calcColor($colorName, $function, $args...) {
-  $colorType: sass-color.parseKwargs($args...);
+  $colorType: args.parseKwargs($args...);
   @if not $colorType {
     @if $function == var.$SCALE {
-      @if sass-color.hasAlpha($args...) {
+      @if args.hasAlpha($args...) {
         $colorType: var.$HSLA;
       } @else {
         $colorType: var.$HSL;
       }
     } @else {
-      $colorType: sass-color.parseArgs($args...);
+      $colorType: args.parsePositional($args...);
     }
   }
   $colorType: $colorType or var.$HSL;
   @if list.length($colorType) == 3 and _hasAlpha($colorName) {
     $colorType: list.append($colorType, var.$ALPHA);
   }
-  $kwargs: utils.formatArgList($colorType, $args...);
+  $kwargs: args.normalize($colorType, $args...);
   $properties: _calcProperties($colorName, $function, $kwargs...);
   $defaults: _defaults($colorName, $colorType);
   $properties: map.merge($defaults, $properties);
