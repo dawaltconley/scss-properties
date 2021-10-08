@@ -17,6 +17,7 @@ $ALPHA: 'alpha';
 
 $RGB: $RED, $GREEN, $BLUE;
 $HSL: $HUE, $SATURATION, $LIGHTNESS;
+$RGBA: list.append($RGB, $ALPHA);
 $HSLA: list.append($HSL, $ALPHA);
 
 $UNIT-DEG: 1deg;
