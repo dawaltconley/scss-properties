@@ -87,3 +87,41 @@
   }
   @return map.merge($argMap, $kwargs);
 }
+
+@function compatible($function, $value, $property) {
+  $unit: map.get(var.$PROPERTIES, $property, 'unit');
+  $min: map.get(var.$PROPERTIES, $property, 'min');
+  $max: map.get(var.$PROPERTIES, $property, 'max');
+  @if $function == var.$SCALE or $function == var.$MIX {
+    $unit: var.$UNIT-PERCENT;
+    $min: list.nth(var.$RANGE-PERCENT, 1);
+    $max: list.nth(var.$RANGE-PERCENT, 2);
+  }
+
+  $isNumber: meta.type-of($value) == 'number';
+  $unitTest: $isNumber and math.is-unitless($value);
+  @if ($isNumber and not math.is-unitless($unit)) {
+    $unitTest: $unitTest or math.compatible($value, $unit);
+  }
+  @if ($isNumber) {
+    $allowNegative: $function and $function == var.$ADJUST or $function == var.$SCALE;
+    $rangeValue: if($allowNegative, math.abs($value), $value);
+    $unitTest: $unitTest and $min < $rangeValue and $rangeValue < $max;
+  }
+  @return meta.type-of($value) == 'string' or $unitTest;
+}
+
+@function validate($function, $colors, $args...) {
+  $propValues: meta.keywords($args);
+  @each $colorName in $colors {
+    @if not (meta.type-of($colorName) == 'string' and map.has-key(var.$COLORS, $colorName)) {
+      @error '#{$colorName} is not a defined color.';
+    }
+  }
+  @each $prop, $value in $propValues {
+    @if $value and not compatible($function, $value, $prop) {
+      @error 'Invalid #{$prop} value for #{$function} function: #{$value}';
+    }
+  }
+  @return true;
+}
