@@ -84,26 +84,6 @@
   @return $function, $property;
 }
 
-// could simplify if I changed the previous function outputs and used meta.call
-@function _getOperation($colorName, $property: null, $type: null, $settings: null) {
-  @if not $property {
-    @error 'Must specify color property: #{$property} #{$type} #{$settings}';
-  }
-  @if not $type {
-    @error 'Must specify modification type: #{$property} #{$type} #{$settings}';
-  }
-  @if $type == 'mix' {
-    $colorName2: list.nth($settings, 1); // allow map as well
-    $weight: list.nth($settings, 2) or 50%;
-    $invert: $property == var.$HUE and _invertHue($colorName, $colorName2);
-    // invert option
-    @return utils.calcMix($colorName, $colorName2, $weight, $property, $modify: $invert and -360deg);
-  } @else {
-    $param: list.nth($settings, 1);
-    @return utils.calcProperty($param, $colorName, $property, $type);
-  }
-}
-
 @function set($colorName, $argList...) {
   $setMap: meta.keywords($argList);
 
