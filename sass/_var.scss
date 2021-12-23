@@ -1,5 +1,7 @@
 @use 'sass:list';
 
+/// @name ColorFunction
+/// Names of color functions used by this library.
 $ADJUST: 'adjust';
 $CHANGE: 'change';
 $SCALE: 'scale';
@@ -15,15 +17,22 @@ $SATURATION: 'saturation';
 $LIGHTNESS: 'lightness';
 $ALPHA: 'alpha';
 
+/// @name ColorType
+/// @type List
+/// List of strings defining color properties
 $RGB: $RED, $GREEN, $BLUE;
 $HSL: $HUE, $SATURATION, $LIGHTNESS;
 $RGBA: list.append($RGB, $ALPHA);
 $HSLA: list.append($HSL, $ALPHA);
 
+/// @name Unit
+/// Valid color units
 $UNIT-DEG: 1deg;
 $UNIT-PERCENT: 1%;
 $UNIT-NONE: 1;
 
+/// @name Range
+/// Valid ranges for color properties.
 $RANGE-RGB: 0 255;
 $RANGE-DEG: 0deg 360deg;
 $RANGE-PERCENT: 0% 100%;

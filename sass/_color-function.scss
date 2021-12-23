@@ -8,7 +8,16 @@
 @use 'utils';
 @use 'color' as clr;
 
-// returns properties for color output based on function, arguments, and color name
+/// @author Alexander Kladkov
+/// @author Dylan Awalt-Conley
+
+/// returns properties for color output based on function, arguments, and color name
+/// @param {String} $function - ColorFunction
+/// @param {String[]} $color - list of defined css properties
+/// @return {List} - ColorType
+/// @see ColorFunction
+/// @see ColorType
+/// @todo more params for $args...
 @function _getColorType($function, $colors, $args...) {
   $colorType: args.parseKwargs($args...);
   @if not $colorType {
@@ -26,7 +35,12 @@
   @return $colorType;
 }
 
-// returns a map of property names and css color values based on kwargs
+/// returns a map of property names and css color values based on kwargs
+/// @param {String} $function - ColorFunction
+/// @param {String} $colorName - name of a defined css property
+/// @return {Map} - defines operations to perform on each property
+/// @see ColorFunction
+/// @todo more params for $args...
 @function _setProperties($function, $colorName, $args...) {
   $kwargs: meta.keywords($args);
   $ops: ();
@@ -44,8 +58,13 @@
   @return $ops;
 }
 
-// returns a color calculated from css properties
-// using the function type, color name, and a variable arguments list
+/// returns a color calculated from css properties
+/// using the function type, color name, and a variable arguments list
+/// @param {String} $function - ColorFunction
+/// @param {String} $colorName - name of a defined css property
+/// @return {Color} a CSS color using calculated properties
+/// @see ColorFunction
+/// @todo more params for $args...
 @function _makeColor($function, $colorName, $args...) {
   $colorType: _getColorType($function, $colorName, $args...);
   $kwargs: args.normalize($colorType, $args...);
@@ -55,7 +74,17 @@
   @return clr.makeColor($properties...);
 }
 
-// accessible alias functions for invoking _makeColor
+/// Adjusts color properties by a fixed amount.
+/// Based on the Sass color.adjust API.
+/// @link https://sass-lang.com/documentation/modules/color#adjust
+/// @param {String} $colorName - the name of a CSS variable created by the define function
+/// @param {Number} $red [null]
+/// @param {Number} $green [null]
+/// @param {Number} $blue [null]
+/// @param {Number} $hue [null]
+/// @param {Number} $saturation [null]
+/// @param {Number} $lightness [null]
+/// @param {Number} $alpha [null]
 @function adjust($colorName, $args...) {
   @return _makeColor(var.$ADJUST, $colorName, $args...);
 }
